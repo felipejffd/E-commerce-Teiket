@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teiket Jewelry</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--plum:#6b3f7c;--plum-l:#9966aa;--plum-pale:#f0e8f5;--gold:#b8963e;--gold-l:#d4b87a;--ink:#1c1c1c;--ink2:#444;--mist:#f7f4f0;--cream:#fefcfa;--border:#e8e2da;--white:#fff;}
+html{scroll-behavior:smooth;font-size:14px}
+body{font-family:'Jost',sans-serif;color:var(--ink);background:var(--cream);overflow-x:hidden;min-width:900px}
+.announce{background:var(--plum);color:#fff;text-align:center;padding:11px 20px;font-size:11px;letter-spacing:1.8px;font-weight:500;text-transform:uppercase;line-height:1.5;}
+header{position:sticky;top:0;z-index:600;background:rgba(254,252,250,0.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:68px;gap:20px;}
+.logo{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;letter-spacing:5px;text-transform:uppercase;text-decoration:none;color:var(--ink);flex-shrink:0;}
+.logo em{color:var(--plum);font-style:normal}
+.main-nav{display:flex;align-items:center;flex:1;justify-content:center;gap:0;}
+.nav-item{position:relative}
+.nav-link{display:block;padding:0 14px;height:68px;line-height:68px;font-size:11px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink2);text-decoration:none;white-space:nowrap;border-bottom:2px solid transparent;transition:color .25s,border-color .25s;}
+.nav-link:hover{color:var(--plum);border-bottom-color:var(--plum);}
+.dropdown{position:absolute;top:100%;left:0;background:var(--white);border:1px solid var(--border);border-top:2px solid var(--plum);box-shadow:0 24px 60px rgba(0,0,0,.11);width:580px;display:grid;grid-template-columns:180px 1fr;opacity:0;visibility:hidden;transform:translateY(-6px);transition:all .28s cubic-bezier(.25,.46,.45,.94);z-index:999;}
+.nav-item:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0);}
+.dd-left{background:var(--mist);padding:28px 24px;border-right:1px solid var(--border);}
+.dd-left h4{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--plum);font-weight:600;margin-bottom:16px;}
+.dd-left a{display:block;font-size:12px;color:var(--ink2);text-decoration:none;padding:8px 0;border-bottom:1px solid rgba(0,0,0,.06);transition:color .2s,padding-left .2s;}
+.dd-left a:last-child{border:none}
+.dd-left a:hover{color:var(--plum);padding-left:6px}
+.dd-right{padding:24px 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.dd-card{cursor:pointer;transition:transform .3s}
+.dd-card:hover{transform:scale(1.04)}
+.dd-card-img{height:110px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:40px;}
+.dd-card p{font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;margin-top:7px;color:var(--ink2);}
+.header-actions{display:flex;gap:18px;align-items:center;flex-shrink:0}
+.hbtn{background:none;border:none;cursor:pointer;width:21px;height:21px;color:var(--ink);transition:color .25s;display:flex;align-items:center;justify-content:center;}
+.hbtn:hover{color:var(--plum)}
+.hbtn svg{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:1.8}
+.cart-wrap{position:relative}
+.cart-badge{position:absolute;top:-7px;right:-8px;background:var(--plum);color:#fff;border-radius:50%;width:16px;height:16px;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.page{display:none}.page.active{display:block}
+.hero-split{display:grid;grid-template-columns:1fr 1fr;height:640px}
+.hp{position:relative;overflow:hidden;cursor:pointer}
+.hp-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:180px;transition:transform 1.1s cubic-bezier(.25,.46,.45,.94);}
+.hp:hover .hp-bg{transform:scale(1.07)}
+.hp-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.54) 0%,rgba(0,0,0,.04) 55%);pointer-events:none;}
+.hp-label{position:absolute;bottom:0;left:0;right:0;padding:38px 42px;color:#fff;}
+.hp-label .tag{font-size:9px;letter-spacing:3px;text-transform:uppercase;font-weight:500;opacity:.8;margin-bottom:10px;}
+.hp-label h2{font-family:'Cormorant Garamond',serif;font-size:50px;font-weight:300;line-height:1.1;letter-spacing:-0.5px;margin-bottom:18px;}
+.hp-label a{display:inline-block;padding:11px 30px;border:1px solid rgba(255,255,255,.7);color:#fff;font-size:10px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;text-decoration:none;transition:all .3s;}
+.hp-label a:hover{background:#fff;color:var(--plum)}
+.sec{padding:80px 40px}.sec-max{max-width:1600px;margin:0 auto}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:44px}
+.sec-head-l h2{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;letter-spacing:-0.5px;}
+.sec-head-l p{font-size:12px;color:#999;margin-top:5px;font-weight:300}
+.see-all{font-size:10px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:var(--plum);text-decoration:none;border-bottom:1px solid var(--plum);padding-bottom:2px;transition:opacity .2s;}
+.see-all:hover{opacity:.6}
+.ftabs{display:flex;gap:8px;margin-bottom:36px;flex-wrap:wrap}
+.ftab{padding:9px 20px;border:1px solid var(--border);border-radius:100px;font-size:11px;font-weight:500;cursor:pointer;background:none;color:var(--ink2);transition:all .22s;}
+.ftab:hover{border-color:var(--plum);color:var(--plum)}
+.ftab.on{background:var(--plum);border-color:var(--plum);color:#fff}
+.car-wrap{overflow:hidden}
+.car-track{display:flex;gap:22px;transition:transform .5s cubic-bezier(.25,.46,.45,.94);}
+.car-btns{display:flex;gap:8px}
+.cbtn{width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink);transition:all .22s;}
+.cbtn:hover{background:var(--plum);border-color:var(--plum);color:#fff}
+.cbtn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+.pcard{flex:0 0 calc(25% - 17px);background:var(--white);border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:box-shadow .35s,transform .35s;}
+.pcard:hover{box-shadow:0 14px 44px rgba(107,63,124,.13);transform:translateY(-6px)}
+.pcard-img{position:relative;height:270px;background:var(--mist);display:flex;align-items:center;justify-content:center;font-size:80px;overflow:hidden;}
+.pcard-badge{position:absolute;top:13px;left:13px;background:var(--ink);color:#fff;font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 11px;}
+.atb{position:absolute;bottom:0;left:0;right:0;background:var(--ink);color:#fff;padding:13px;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-align:center;border:none;cursor:pointer;transform:translateY(100%);transition:transform .3s cubic-bezier(.25,.46,.45,.94);}
+.pcard:hover .atb{transform:translateY(0)}
+.pcard-info{padding:18px 20px 20px}
+.pcard-name{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;margin-bottom:4px;line-height:1.3;}
+.pcard-sub{font-size:10px;color:#aaa;font-weight:300;margin-bottom:10px}
+.pcard-price{display:flex;gap:8px;align-items:center}
+.p-now{font-size:14px;font-weight:600;color:var(--plum)}
+.p-was{font-size:12px;color:#ccc;text-decoration:line-through}
+.tgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.tcard{cursor:pointer;border-radius:6px;overflow:hidden}
+.tcard-img{height:250px;display:flex;align-items:center;justify-content:center;font-size:60px;overflow:hidden;transition:transform .5s;}
+.tcard:hover .tcard-img{transform:scale(1.06)}
+.tcard-info{padding:14px 0 2px}
+.tcard-info h3{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;margin-bottom:3px;}
+.tcard-info p{font-size:10px;color:#aaa;font-weight:300}
+.retailers{padding:55px 40px;background:var(--mist);border-top:1px solid var(--border);border-bottom:1px solid var(--border);text-align:center;}
+.retailers h3{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;margin-bottom:6px;}
+.retailers p{font-size:10px;color:#aaa;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:32px}
+.rlogos{display:flex;justify-content:center;gap:50px;align-items:center;flex-wrap:wrap}
+.rlogo{font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#bbb;transition:color .25s;cursor:pointer;}
+.rlogo:hover{color:var(--plum)}
+.ugc{padding:80px 40px;background:var(--cream)}
+.ugc-head{text-align:center;margin-bottom:44px}
+.ugc-head h2{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;margin-bottom:7px;}
+.ugc-head p{font-size:10px;color:#aaa;letter-spacing:1.5px;text-transform:uppercase}
+.ugc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;max-width:1600px;margin:0 auto;}
+.ugc-item{position:relative;aspect-ratio:1;overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:60px;}
+.ugc-over{position:absolute;inset:0;background:rgba(107,63,124,.5);opacity:0;transition:opacity .3s;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;}
+.ugc-item:hover .ugc-over{opacity:1}
+.reviews{padding:80px 40px;background:var(--mist)}
+.rev-head{text-align:center;margin-bottom:44px}
+.rev-head h2{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;margin-bottom:5px;}
+.rev-head p{font-size:11px;color:#aaa;letter-spacing:1px}
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1600px;margin:0 auto;}
+.rcard{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:28px;}
+.stars{color:var(--gold);font-size:12px;letter-spacing:2px;margin-bottom:12px}
+.rtext{font-family:'Cormorant Garamond',serif;font-size:15px;line-height:1.7;color:var(--ink2);font-style:italic;margin-bottom:16px;}
+.rauthor{display:flex;align-items:center;gap:10px}
+.ravatar{width:34px;height:34px;border-radius:50%;background:var(--plum-pale);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--plum);}
+.rname{font-size:11px;font-weight:600}.rbadge{font-size:9px;color:#bbb;letter-spacing:.5px}
+footer{background:var(--ink);color:#fff;padding:70px 40px 36px}
+.ft-inner{max-width:1600px;margin:0 auto}
+.ft-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:50px;margin-bottom:50px;}
+.ft-brand-logo{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#fff;text-decoration:none;display:block;margin-bottom:16px;}
+.ft-brand-logo em{color:var(--gold-l);font-style:normal}
+.ft-brand p{font-size:12px;color:rgba(255,255,255,.45);line-height:1.8;max-width:260px;font-weight:300}
+.ft-socials{display:flex;gap:12px;margin-top:24px}
+.fsoc{width:36px;height:36px;border:1px solid rgba(255,255,255,.18);border-radius:50%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.55);text-decoration:none;font-size:12px;transition:all .25s;}
+.fsoc:hover{background:var(--plum);border-color:var(--plum);color:#fff}
+.ft-col h4{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold-l);margin-bottom:20px;font-weight:600;}
+.ft-col ul{list-style:none}.ft-col ul li{margin-bottom:11px}
+.ft-col a{color:rgba(255,255,255,.5);text-decoration:none;font-size:12px;font-weight:300;transition:color .25s;}
+.ft-col a:hover{color:#fff}
+.ft-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:28px;display:flex;justify-content:space-between;align-items:center;font-size:10px;color:rgba(255,255,255,.3);letter-spacing:.5px;flex-wrap:wrap;gap:10px;}
+.sp-hero{height:320px;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;}
+.sp-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(107,63,124,.18),rgba(107,63,124,.42));pointer-events:none;}
+.sp-hero-inner{position:relative;z-index:1}
+.sp-hero-inner span{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.75);font-weight:500;}
+.sp-hero-inner h1{font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:300;color:#fff;letter-spacing:-1px;margin-top:6px;}
+.sp-content{padding:60px 40px}.sp-inner{max-width:1600px;margin:0 auto}
+.sp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:26px}
+</style>
+</head>
+<body>
+<div class="announce">Envío gratis en pedidos mayores a $75 &nbsp;·&nbsp; Hecho para ti &nbsp;✦&nbsp; Nuevo: Colección Tendencia 2026</div>
+<header>
+<div class="header-inner">
+  <a class="logo" href="#" onclick="show('home');return false">TEI<em>KET</em></a>
+  <nav class="main-nav">
+    <div class="nav-item"><a class="nav-link" href="#" onclick="show('nuevos');return false">Nuevos</a><div class="dropdown"><div class="dd-left"><h4>Comprar por tipo</h4><a href="#" onclick="show('nuevos');return false">Ver Todo lo Nuevo</a><a href="#" onclick="show('collares');return false">Nuevos Collares</a><a href="#" onclick="show('aretes');return false">Nuevos Aretes</a><a href="#" onclick="show('brazaletes');return false">Nuevas Pulseras</a><a href="#" onclick="show('anillos');return false">Nuevos Anillos</a></div><div class="dd-right"><div class="dd-card" onclick="show('nuevos')"><div class="dd-card-img" style="background:linear-gradient(135deg,#e8d4f0,#c8a8dc)">💎</div><p>Recién Llegado</p></div><div class="dd-card" onclick="show('tendencia')"><div class="dd-card-img" style="background:linear-gradient(135deg,#d4eaf0,#a8cce0)">✨</div><p>En Tendencia</p></div><div class="dd-card" onclick="show('nuevos')"><div class="dd-card-img" style="background:linear-gradient(135deg,#f0e8d4,#e0d0a8)">🌟</div><p>Más Vendidos</p></div></div></div></div>
+    <div class="nav-item"><a class="nav-link" href="#" onclick="show('tendencia');return false">Tendencia</a><div class="dropdown"><div class="dd-left"><h4>Colecciones</h4><a href="#" onclick="show('tendencia');return false">Ver Todo</a><a href="#">Capas & Layers</a><a href="#">Minimalista</a><a href="#">Statement</a><a href="#">Vintage Glam</a></div><div class="dd-right"><div class="dd-card" onclick="show('tendencia')"><div class="dd-card-img" style="background:linear-gradient(135deg,#ead4f0,#c898e0)">🐍</div><p>Serpentina</p></div><div class="dd-card" onclick="show('collares')"><div class="dd-card-img" style="background:linear-gradient(135deg,#d4f0e8,#a0d4bc)">🌊</div><p>Marina</p></div><div class="dd-card" onclick="show('tendencia')"><div class="dd-card-img" style="background:linear-gradient(135deg,#f0f0d4,#d4d4a0)">⭐</div><p>Festival</p></div></div></div></div>
+    <div class="nav-item"><a class="nav-link" href="#" onclick="show('brazaletes');return false">Brazaletes</a><div class="dropdown"><div class="dd-left"><h4>Por Estilo</h4><a href="#" onclick="show('brazaletes');return false">Ver Todo</a><a href="#">Cadenas</a><a href="#">Charms</a><a href="#">Cuff</a><a href="#">Sets de Pulseras</a><a href="#">Dorado 18k</a></div><div class="dd-right"><div class="dd-card" onclick="show('brazaletes')"><div class="dd-card-img" style="background:linear-gradient(135deg,#f0ead4,#e0d4a0)">📿</div><p>Sets</p></div><div class="dd-card" onclick="show('brazaletes')"><div class="dd-card-img" style="background:linear-gradient(135deg,#d4e0f0,#a0c0e8)">💛</div><p>Cuff</p></div><div class="dd-card" onclick="show('brazaletes')"><div class="dd-card-img" style="background:linear-gradient(135deg,#f0d4e8,#e0a0c8)">🔗</div><p>Cadenas</p></div></div></div></div>
+    <div class="nav-item"><a class="nav-link" href="#" onclick="show('collares');return false">Collares</a><div class="dropdown"><div class="dd-left"><h4>Por Estilo</h4><a href="#" onclick="show('collares');return false">Ver Todo</a><a href="#">Chokers</a><a href="#">Capas</a><a href="#">Bolo</a><a href="#">Personalizados</a><a href="#">Sets</a></div><div class="dd-right"><div class="dd-card" onclick="show('collares')"><div class="dd-card-img" style="background:linear-gradient(135deg,#e8d4f0,#d0b8e8)">🐍</div><p>Chokers</p></div><div class="dd-card" onclick="show('collares')"><div class="dd-card-img" style="background:linear-gradient(135deg,#d4e8e0,#b0d4c8)">💎</div><p>Capas</p></div><div class="dd-card" onclick="show('collares')"><div class="dd-card-img" style="background:linear-gradient(135deg,#f0e8d4,#e0d0b0)">✨</div><p>Bolo</p></div></div></div></div>
+    <div class="nav-item"><a class="nav-link" href="#" onclick="show('anillos');return false">Anillos</a><div class="dropdown"><div class="dd-left"><h4>Por Estilo</h4><a href="#" onclick="show('anillos');return false">Ver Todo</a><a href="#">Apilables</a><a href="#">Solitarios</a><a href="#">Con Piedra</a><a href="#">Sets de Anillos</a></div><div class="dd-right"><div class="dd-card" onclick="show('anillos')"><div class="dd-card-img" style="background:linear-gradient(135deg,#f0e8d4,#e0d4a8)">💍</div><p>Apilables</p></div><div class="dd-card" onclick="show('anillos')"><div class="dd-card-img" style="background:linear-gradient(135deg,#ead4f0,#d4a8e8)">🔮</div><p>Con Piedra</p></div><div class="dd-card" onclick="show('anillos')"><div class="dd-card-img" style="background:linear-gradient(135deg,#d4eaf0,#a8d4e8)">⚡</div><p>Sets</p></div></div></div></div>
+    <div class="nav-item"><a class="nav-link" href="#" onclick="show('aretes');return false">Aretes</a><div class="dropdown"><div class="dd-left"><h4>Por Tipo</h4><a href="#" onclick="show('aretes');return false">Ver Todo</a><a href="#">Argollas</a><a href="#">Colgantes</a><a href="#">Studs</a><a href="#">Ear Cuffs</a><a href="#">Sets</a></div><div class="dd-right"><div class="dd-card" onclick="show('aretes')"><div class="dd-card-img" style="background:linear-gradient(135deg,#f0d4d4,#e0a8a8)">🌸</div><p>Colgantes</p></div><div class="dd-card" onclick="show('aretes')"><div class="dd-card-img" style="background:linear-gradient(135deg,#d4f0d4,#a8e0a8)">💫</div><p>Studs</p></div><div class="dd-card" onclick="show('aretes')"><div class="dd-card-img" style="background:linear-gradient(135deg,#d4d4f0,#a8a8e0)">🌙</div><p>Ear Cuffs</p></div></div></div></div>
+  </nav>
+  <div class="header-actions">
+    <button class="hbtn"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+    <button class="hbtn"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></button>
+    <div class="cart-wrap"><button class="hbtn"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button><span class="cart-badge" id="cc">0</span></div>
+  </div>
+</div>
+</header>
+
+<div class="page active" id="p-home">
+<section class="hero-split"><div class="hp"><div class="hp-bg" style="background:linear-gradient(160deg,#c0a0d0 0%,#8858a8 100%)">💎</div><div class="hp-overlay"></div><div class="hp-label"><div class="tag">Nueva Colección</div><h2>Turquoise<br>Collection</h2><a href="#" onclick="show('collares');return false">Comprar Ahora</a></div></div><div class="hp"><div class="hp-bg" style="background:linear-gradient(160deg,#d0c0a0 0%,#a08060 100%)">🐍</div><div class="hp-overlay"></div><div class="hp-label"><div class="tag">Best Seller</div><h2>Abalone<br>Serpentina</h2><a href="#" onclick="show('tendencia');return false">Explorar</a></div></div></section>
+<section class="sec" style="background:var(--cream)"><div class="sec-max"><div class="sec-head"><div class="sec-head-l"><h2>Más Populares</h2><p>Eleva tu estilo con nuestros últimos diseños.</p></div><div style="display:flex;align-items:center;gap:16px"><div class="car-btns"><button class="cbtn" onclick="carScroll(-1)"><svg viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg></button><button class="cbtn" onclick="carScroll(1)"><svg viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg></button></div><a class="see-all" href="#" onclick="show('nuevos');return false">Ver Todo</a></div></div><div class="ftabs" id="hftabs"><button class="ftab on" onclick="hFilter('all',this)">Best Sellers</button><button class="ftab" onclick="hFilter('new',this)">Nuevos</button><button class="ftab" onclick="hFilter('fest',this)">Festival</button><button class="ftab" onclick="hFilter('col',this)">Collares</button><button class="ftab" onclick="hFilter('set',this)">Sets</button></div><div class="car-wrap"><div class="car-track" id="ct"><div class="pcard" data-c="all col"><div class="pcard-img"><span class="pcard-badge">Best Seller</span>🐍<button class="atb" onclick="ac(event)">Agregar al Carrito</button></div><div class="pcard-info"><div class="pcard-name">Serpentina Snake Choker</div><div class="pcard-sub">Cristal transparente · Oro 18k</div><div class="pcard-price"><span class="p-now">$125</span></div></div></div><div class="pcard" data-c="all col"><div class="pcard-img"><span class="pcard-badge">Best Seller</span>💎<button class="atb" onclick="ac(event)">Agregar al Carrito</button></div><div class="pcard-info"><div class="pcard-name">Marina Layers Turquoise</div><div class="pcard-sub">Turquesa · Baño de oro 18k</div><div class="pcard-price"><span class="p-now">$120</span></div></div></div><div class="pcard" data-c="all col"><div class="pcard-img"><span class="pcard-badge">Best Seller</span>✨<button class="atb" onclick="ac(event)">Agregar al Carrito</button></div><div class="pcard-info"><div class="pcard-name">Bone Statement Bolo</div><div class="pcard-sub">Bone stone · Oro 18k</div><div class="pcard-price"><span class="p-now">$115</span></div></div></div><div class="pcard" data-c="all new"><div class="pcard-img"><span class="pcard-badge">Nuevo</span>💛<button class="atb" onclick="ac(event)">Agregar al Carrito</button></div><div class="pcard-info"><div class="pcard-name">Locked Heart Necklace</div><div class="pcard-sub">Rhodium y corazón dorado 18k</div><div class="pcard-price"><span class="p-now">$110</span></div></div></div><div class="pcard" data-c="all set"><div class="pcard-img">💜<button class="atb" onclick="ac(event)">Agregar al Carrito</button></div><div class="pcard-info"><div class="pcard-name">Luck & Love Set</div><div class="pcard-sub">Turquesa · Colgante corazón</div><div class="pcard-price"><span class="p-now">$105</span><span class="p-was">$120</span></div></div></div><div class="pcard" data-c="all fest"><div class="pcard-img"><span class="pcard-badge">Trending</span>🌟<button class="atb" onclick="ac(event)">Agregar al Carrito</button></div><div class="pcard-info"><div class="pcard-name">Festival Crystal Set</div><div class="pcard-sub">Cristal arcoíris · Oro 18k</div><div class="pcard-price"><span class="p-now">$95</span></div></div></div></div></div></div></section>
+<section class="sec" style="background:var(--white)"><div class="sec-max"><div class="sec-head"><div class="sec-head-l"><h2>Shop Tendencias</h2><p>Encuentra los estilos imprescindibles de la temporada.</p></div><a class="see-all" href="#">Ver Todo</a></div><div class="tgrid"><div class="tcard" onclick="show('collares')"><div class="tcard-img" style="background:linear-gradient(160deg,#b8d8f0,#88b8e0)">🌊</div><div class="tcard-info"><h3>Turquoise</h3><p>Vibrant hues for golden days</p></div></div><div class="tcard" onclick="show('collares')"><div class="tcard-img" style="background:linear-gradient(160deg,#e4d0f0,#c098d8)">🐍</div><div class="tcard-info"><h3>Chokers</h3><p>Layers start here</p></div></div><div class="tcard" onclick="show('tendencia')"><div class="tcard-img" style="background:linear-gradient(160deg,#f0e4d0,#d8c098)">🌿</div><div class="tcard-info"><h3>Aura</h3><p>Where elegance meets energy</p></div></div><div class="tcard" onclick="show('tendencia')"><div class="tcard-img" style="background:linear-gradient(160deg,#d0f0e0,#98d4b8)">🌸</div><div class="tcard-info"><h3>Spring</h3><p>Spring looks good on you</p></div></div><div class="tcard" onclick="show('collares')"><div class="tcard-img" style="background:linear-gradient(160deg,#f0d0d4,#e09898)">💫</div><div class="tcard-info"><h3>Lariats</h3><p>Delicate, dramatic, made to be noticed</p></div></div><div class="tcard" onclick="show('nuevos')"><div class="tcard-img" style="background:linear-gradient(160deg,#f0f0d0,#d8d898)">🎪</div><div class="tcard-info"><h3>Festival</h3><p>Turquoise, leather, whimsical</p></div></div><div class="tcard" onclick="show('collares')"><div class="tcard-img" style="background:linear-gradient(160deg,#dcd0f0,#b498d8)">🌙</div><div class="tcard-info"><h3>Serpentina</h3><p>Reborn, Renew, Resiliance</p></div></div><div class="tcard" onclick="show('nuevos')"><div class="tcard-img" style="background:linear-gradient(160deg,#f0dcd0,#d8b8a0)">🏖️</div><div class="tcard-info"><h3>Vacation</h3><p>Chase an endless summer</p></div></div></div></div></section>
+<section class="retailers"><h3>¿Ya Nos Conociste?</h3><p>Shop Teiket en estos top retailers</p><div class="rlogos"><span class="rlogo">Revolve</span><span class="rlogo">Nordstrom</span><span class="rlogo">Bloomingdale's</span><span class="rlogo">Shopbop</span></div></section>
+<section class="ugc"><div class="ugc-head"><h2>#VísteloConConfianza</h2><p>Shop customer looks · Tag @teiket_jewelry para ser destacada</p></div><div class="ugc-grid"><div class="ugc-item" style="background:linear-gradient(135deg,#e8d4f0,#d0bce0)">💎<div class="ugc-over">@teiket_fan</div></div><div class="ugc-item" style="background:linear-gradient(135deg,#d4e8f0,#bcd8e8)">✨<div class="ugc-over">@glam.girl</div></div><div class="ugc-item" style="background:linear-gradient(135deg,#f0e8d4,#e8d8bc)">🐍<div class="ugc-over">@style.by.mi</div></div><div class="ugc-item" style="background:linear-gradient(135deg,#f0d4e8,#e8bcd4)">💛<div class="ugc-over">@boho.vibes</div></div></div></section>
+<section class="reviews"><div class="rev-head"><h2>23,513 · Reseñas de 5 Estrellas</h2><p>Lo que dicen nuestras clientas</p></div><div class="rev-grid"><div class="rcard"><div class="stars">★★★★★</div><p class="rtext">"Tan lindas y hermosas. Me impresioné tanto que salí de mi zona de confort y realmente amé lo que obtuve."</p><div class="rauthor"><div class="ravatar">J</div><div><div class="rname">Jade</div><div class="rbadge">✓ Compradora verificada</div></div></div></div><div class="rcard"><div class="stars">★★★★★</div><p class="rtext">"He estado mirando este lugar durante meses. ¡Finalmente lo hice y no decepciona en absoluto!"</p><div class="rauthor"><div class="ravatar">N</div><div><div class="rname">Natasha</div><div class="rbadge">✓ Compradora verificada</div></div></div></div><div class="rcard"><div class="stars">★★★★★</div><p class="rtext">"Trabajo en la industria joyera y soy muy exigente. Su color plateado es hermoso y su empaque es genial."</p><div class="rauthor"><div class="ravatar">K</div><div><div class="rname">Krissy</div><div class="rbadge">✓ Compradora verificada</div></div></div></div></div></section>
+<footer><div class="ft-inner"><div class="ft-top"><div class="ft-brand"><a class="ft-brand-logo" href="#" onclick="show('home');return false">TEI<em>KET</em></a><p>Joyas diseñadas para la mujer que sabe quién es. Cada pieza es una expresión de elegancia, autenticidad y empoderamiento.</p><div class="ft-socials"><a class="fsoc" href="#">f</a><a class="fsoc" href="#">ig</a><a class="fsoc" href="#">tk</a><a class="fsoc" href="#">▶</a></div></div><div class="ft-col"><h4>Tienda</h4><ul><li><a href="#" onclick="show('nuevos');return false">Nuevos</a></li><li><a href="#" onclick="show('tendencia');return false">Tendencia</a></li><li><a href="#" onclick="show('collares');return false">Collares</a></li><li><a href="#" onclick="show('brazaletes');return false">Brazaletes</a></li><li><a href="#" onclick="show('anillos');return false">Anillos</a></li><li><a href="#" onclick="show('aretes');return false">Aretes</a></li></ul></div><div class="ft-col"><h4>Ayuda</h4><ul><li><a href="#">Contacto</a></li><li><a href="#">Envíos</a></li><li><a href="#">Devoluciones</a></li><li><a href="#">FAQ</a></li></ul></div><div class="ft-col"><h4>Teiket</h4><ul><li><a href="#">Nuestra Historia</a></li><li><a href="#">Sostenibilidad</a></li><li><a href="#">Blog</a></li><li><a href="#">Afiliados</a></li></ul></div></div><div class="ft-bottom"><span>© 2026 Teiket Jewelry · Todos los derechos reservados</span><span>Hecho con ♥ para mujeres empoderadas</span></div></div></footer>
+</div>
+
+<div id="sp-container"></div>
+<script>
+const pages={nuevos:{title:'Nuevos',tag:'Recién llegado',bg:'linear-gradient(135deg,#e8d4f0,#c0a8d8)'},tendencia:{title:'Tendencia',tag:'Esta temporada',bg:'linear-gradient(135deg,#f0e8d4,#d8c8a0)'},brazaletes:{title:'Brazaletes',tag:'Colección completa',bg:'linear-gradient(135deg,#d4e8f0,#a8c8e4)'},collares:{title:'Collares',tag:'Colección completa',bg:'linear-gradient(135deg,#e4d4f0,#c0a0d8)'},anillos:{title:'Anillos',tag:'Colección completa',bg:'linear-gradient(135deg,#f0ead4,#e0d0a0)'},aretes:{title:'Aretes',tag:'Colección completa',bg:'linear-gradient(135deg,#f0d4d4,#e0a8a8)'}};
+const prods=[{n:'Serpentina Snake Choker',s:'Cristal transparente · Oro 18k',p:'$125',b:'Best Seller',e:'🐍',bg:'linear-gradient(135deg,#e8d4f0,#d0b8e0)'},{n:'Marina Layers Turquoise',s:'Turquesa · Baño de oro 18k',p:'$120',b:'Best Seller',e:'💎',bg:'linear-gradient(135deg,#d4e8f0,#b8d0e8)'},{n:'Bone Statement Bolo',s:'Bone stone · Oro 18k',p:'$115',b:'Best Seller',e:'✨',bg:'linear-gradient(135deg,#f0f0d4,#d8d8b0)'},{n:'Locked Heart Necklace',s:'Rhodium y corazón dorado 18k',p:'$110',b:'Nuevo',e:'💛',bg:'linear-gradient(135deg,#f0ead4,#e8d8b0)'},{n:'Luck & Love Set',s:'Turquesa · Colgante corazón',p:'$105',b:'',e:'💜',bg:'linear-gradient(135deg,#e8d4f0,#d0b8e0)'},{n:'Festival Crystal Set',s:'Cristal arcoíris · Oro 18k',p:'$95',b:'Trending',e:'🌟',bg:'linear-gradient(135deg,#f0e8d4,#e0d0b0)'},{n:'Aura Cuff Bracelet',s:'Acero inoxidable dorado',p:'$85',b:'Nuevo',e:'⚡',bg:'linear-gradient(135deg,#d4e8f0,#b0d0e8)'},{n:'Pearl Drop Studs',s:'Perla de agua dulce · Plata',p:'$75',b:'',e:'🌸',bg:'linear-gradient(135deg,#f0d4d4,#e0b0b0)'}];
+function show(page){document.getElementById('p-home').classList.remove('active');document.getElementById('sp-container').innerHTML='';if(page==='home'){document.getElementById('p-home').classList.add('active');window.scrollTo({top:0,behavior:'smooth'});return;}const d=pages[page];if(!d)return;const ph=prods.map(p=>`<div class="pcard"><div class="pcard-img" style="background:${p.bg}">${p.b?`<span class="pcard-badge">${p.b}</span>`:''}${p.e}<button class="atb" onclick="ac(event)">Agregar al Carrito</button></div><div class="pcard-info"><div class="pcard-name">${p.n}</div><div class="pcard-sub">${p.s}</div><div class="pcard-price"><span class="p-now">${p.p}</span></div></div></div>`).join('');const sp=document.createElement('div');sp.innerHTML=`<div class="sp-hero" style="background:${d.bg}"><div class="sp-hero-inner"><span>${d.tag}</span><h1>${d.title}</h1></div></div><div class="sp-content"><div class="sp-inner"><div class="ftabs sp-ftabs"><button class="ftab on">Ver Todo</button><button class="ftab">Best Sellers</button><button class="ftab">Nuevos</button><button class="ftab">Dorado 18k</button><button class="ftab">Plata</button><button class="ftab">Sets</button></div><div class="sp-grid">${ph}</div></div></div><footer style="background:var(--ink);color:#fff;padding:50px 40px 28px"><div style="max-width:1600px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px"><a href="#" style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;letter-spacing:4px;color:#fff;text-decoration:none;text-transform:uppercase" onclick="show('home');return false">TEI<span style="color:var(--gold-l)">KET</span></a><div style="display:flex;gap:24px;flex-wrap:wrap"><a href="#" style="color:rgba(255,255,255,.5);font-size:11px;text-decoration:none" onclick="show('home');return false">← Inicio</a><a href="#" style="color:rgba(255,255,255,.5);font-size:11px;text-decoration:none" onclick="show('collares');return false">Collares</a><a href="#" style="color:rgba(255,255,255,.5);font-size:11px;text-decoration:none" onclick="show('brazaletes');return false">Brazaletes</a><a href="#" style="color:rgba(255,255,255,.5);font-size:11px;text-decoration:none" onclick="show('anillos');return false">Anillos</a><a href="#" style="color:rgba(255,255,255,.5);font-size:11px;text-decoration:none" onclick="show('aretes');return false">Aretes</a></div><span style="color:rgba(255,255,255,.3);font-size:10px">© 2026 Teiket Jewelry</span></div></footer>`;sp.querySelectorAll('.sp-ftabs .ftab').forEach(btn=>{btn.addEventListener('click',function(){sp.querySelectorAll('.sp-ftabs .ftab').forEach(b=>b.classList.remove('on'));this.classList.add('on');});});document.getElementById('sp-container').appendChild(sp);window.scrollTo({top:0,behavior:'smooth'});}
+let cOff=0;
+function carScroll(dir){const track=document.getElementById('ct');const cards=[...track.querySelectorAll('.pcard')].filter(c=>c.style.display!=='none');if(!cards.length)return;const w=cards[0].offsetWidth+22;const vis=Math.floor(track.parentElement.offsetWidth/w);cOff=Math.min(Math.max(cOff+dir,0),Math.max(0,cards.length-vis));track.style.transform=`translateX(-${cOff*w}px)`;}
+function hFilter(cat,btn){document.querySelectorAll('#hftabs .ftab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');document.querySelectorAll('#ct .pcard').forEach(c=>{c.style.display=(cat==='all'||c.dataset.c.includes(cat))?'':'none';});cOff=0;document.getElementById('ct').style.transform='translateX(0)';}
+function ac(e){e.stopPropagation();const n=parseInt(document.getElementById('cc').textContent)||0;document.getElementById('cc').textContent=n+1;const btn=e.currentTarget;const orig=btn.textContent;btn.textContent='✓ Agregado';setTimeout(()=>btn.textContent=orig,1400);}
+</script>
+</body>
+</html>
